@@ -1,10 +1,10 @@
 import * as types from './types';
-import todos from '../apis/todos';
+import axios from 'axios';
 
 export const fetchTodos = () => dispatch => {
     return new Promise((resolve, reject) => {
         dispatch({ type: types.BEGIN_AJAX_CALL });
-        todos.get('api/todos')
+        axios.get('api/todos')
             .then(response => {
                 dispatch({ type: types.FETCH_TODOS_SUCCESS, payload: response.data });
                 resolve();
@@ -25,7 +25,7 @@ export const createTodo = (formValues) => dispatch => {
             action: formValues.todo
         };
 
-        todos.post('api/todos', data)
+        axios.post('api/todos', data)
             .then(response => {
                 dispatch({ type: types.ADD_TODO_SUCCESS, payload: response.data });
                 resolve();
@@ -42,7 +42,7 @@ export const deleteTodo = (id) => dispatch => {
     return new Promise((resolve, reject) => {
         dispatch({ type: types.BEGIN_AJAX_CALL });
 
-        todos.delete('api/todos/' + id)
+        axios.delete('api/todos/' + id)
             .then(response => {
                 dispatch({ type: types.DELETE_TODO_SUCCESS, payload: response.data });
                 resolve();
